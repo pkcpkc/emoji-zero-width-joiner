@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="de">
+
+<head>
+   <meta charset="UTF-8">
+   <script style="">
+      function combine() {
+         var a = document.getElementById("a").value;
+         var b = document.getElementById("b").value;
+         var target = document.getElementById("target");
+         target.innerHTML = a + "&zwj;" + b;
+         return true;
+      }
+
+      function copyToClipboard(elementId) {
+         var range = document.createRange();
+         range.selectNode(document.getElementById(elementId));
+         window.getSelection().removeAllRanges(); // clear current selection
+         window.getSelection().addRange(range); // to select text
+         document.execCommand("copy");
+         window.getSelection().removeAllRanges();// to deselect
+      }
+
+      function setEmojis(a,b) {
+         document.getElementById("a").value = a;
+         document.getElementById("b").value = b;
+         combine();
+      }
+   </script>
+   <style>
+      div {
+         display:inline;
+      }
+      input {
+         font-size: 200px;
+      }
+
+      .big {
+         font-size: 200px;
+      }
+
+      #target::before {
+         content:"=";
+      }
+   </style>
+</head>
+
+<body onload="combine();">
+   <h1>Zero Width Joiner Emoji Fun</h1>
+   <input id="a" type="text" onkeyup="return combine();" value="👨" size="4"/><div class="big">+</div>
+   <input id="b" type="text" onkeyup="return combine();" value="💻" size="4"/>
+   <div id="target" class="big"></div>
+   <input type="button" value="Copy Emoji" onclick="copyToClipboard('target')" /><br/>
+   <input type="button" value="👁🗨" onclick="setEmojis('👁','🗨');"/>
+   <input type="button" value="👩🔬" onclick="setEmojis('👩','🔬');"/>
+   <input type="button" value="🏄♀" onclick="setEmojis('🏄','♀');"/>
+   <input type="button" value="👩🔧" onclick="setEmojis('👩','🔧');"/>
+   <input type="button" value="🤾♂️" onclick="setEmojis('🤾','♂️');"/>
+   <input type="button" value="👨‍‍‍‍‍❤️‍💋👨" onclick="setEmojis('👨‍❤️','💋‍👨');"/>
+   <input type="button" value="👨👩👦👦" onclick="setEmojis('👨‍👩','👦‍👦');"/>
+   <input type="button" value="👨🎨" onclick="setEmojis('👨','🎨');"/>
+ <br/><br/>
+ Zero Width Joiner (ZWJ) <a href="https://en.wikipedia.org/wiki/Zero-width_joiner" target="_blank">Wikipedia</a><br/>
+ Emoji ZWJ Sequences <a href="https://emojipedia.org/emoji-zwj-sequences/" target="_blank">Emojipedia</a><br/><br/>
+   <div id="zwj">&#8205;</div>
+   <input type="button" value="Copy Zero Width Joiner" onclick="copyToClipboard('zwj')" /><br/>
+</body>
+
+</html>
