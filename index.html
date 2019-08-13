@@ -1,6 +1,5 @@
 <!doctype html>
 <html lang="de">
-
 <head>
    <meta charset="UTF-8">
    <script style="">
@@ -43,13 +42,15 @@
          var sequenceArray = [];
          //file:///Users/phackenb/Projects/emoji-zero-width-joiner/index.html?sequence=["👩","🔬"]
          try {
-            sequenceArray = JSON.parse(decodeURI(location.search.substring("?sequence=".length)));
+            sequenceArray = JSON.parse(decodeURI(location.hash.substring("#sequence=".length)));
          } catch (e) {
             sequenceArray = ['👩', '🔧'];
          }
          setEmojis(sequenceArray);
          document.getElementById("emoji").focus();
       }
+
+      window.onhashchange = init;
    </script>
    <style>
       * {
@@ -77,7 +78,7 @@
 
 <body onload="init();">
    <h1>Zero Width Joiner Emoji Fun</h1>
-   Copy & paste emoji by emoji here, or use following GET param: <a href="?sequence=[&quot;👩&quot;,&quot;🔬&quot;]">?sequence=["👩","🔬"]</a><br />
+   Copy & paste emoji by emoji here, or use following anchor: <a href="#sequence=[&quot;👩&quot;,&quot;🔬&quot;]" onclick="init();">#sequence=["👩","🔬"]</a><br />
    <input id="emoji" type="text" onkeyup="add();" size="1" /><br />
    <div id="emojis"></div><br />
    <div id="result"></div>&nbsp;<input type="button" value="Copy Emoji" onclick="copyToClipboard('result')" /><br />
