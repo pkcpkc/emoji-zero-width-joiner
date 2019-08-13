@@ -4,13 +4,7 @@
 <head>
    <meta charset="UTF-8">
    <script style="">
-      function combine() {
-         var a = document.getElementById("a").value;
-         var b = document.getElementById("b").value;
-         var target = document.getElementById("target");
-         target.innerHTML = a + "&zwj;" + b;
-         return true;
-      }
+      const emojis = [['👁','🗨'],['👩','🔬'],['🏄','♀'],['👩','🔧'],['🤾','♂️'],['👨','❤️','💋','👨'],['👨','👩','👦','👦'],['👨','🎨']];
 
       function copyToClipboard(elementId) {
          var range = document.createRange();
@@ -21,15 +15,43 @@
          window.getSelection().removeAllRanges();// to deselect
       }
 
-      function setEmojis(a,b) {
-         document.getElementById("a").value = a;
-         document.getElementById("b").value = b;
-         combine();
+      function setEmojis(emojis) {
+         reset();
+         var emoji = document.getElementById("emoji");
+         for (var i=0;i<emojis.length;i++) {
+            emoji.value = emojis[i];
+            add();
+         }
+      }
+
+      function add() {
+         var emojis = document.getElementById("emojis");
+         var result = document.getElementById("result");
+         var emoji = document.getElementById("emoji");
+
+         emojis.innerHTML += (emojis.innerHTML.length>0?"+":"") + emoji.value;
+         result.innerHTML += (result.innerHTML.length>0?"&zwj;":"") + emoji.value;
+         emoji.value = '';
+      }
+
+      function reset() {
+         document.getElementById("emojis").innerHTML = "";
+         document.getElementById("result").innerHTML = "";
+      }
+
+      function init() {
+         setEmojis(['👩','🔧']);
+         document.getElementById("emoji").focus();
       }
    </script>
    <style>
+      * {
+         font-family: arial;
+      }
+
       div {
          display:inline;
+         font-size: 200px;
       }
       input {
          font-size: 200px;
@@ -39,31 +61,31 @@
          font-size: 200px;
       }
 
-      #target::before {
+      #emojis::after {
          content:"=";
       }
    </style>
 </head>
 
-<body onload="combine();">
+<body onload="init();">
    <h1>Zero Width Joiner Emoji Fun</h1>
-   <input id="a" type="text" onkeyup="return combine();" value="👨" size="4"/><div class="big">+</div>
-   <input id="b" type="text" onkeyup="return combine();" value="💻" size="4"/>
-   <div id="target" class="big"></div>
-   <input type="button" value="Copy Emoji" onclick="copyToClipboard('target')" /><br/>
-   <input type="button" value="👁🗨" onclick="setEmojis('👁','🗨');"/>
-   <input type="button" value="👩🔬" onclick="setEmojis('👩','🔬');"/>
-   <input type="button" value="🏄♀" onclick="setEmojis('🏄','♀');"/>
-   <input type="button" value="👩🔧" onclick="setEmojis('👩','🔧');"/>
-   <input type="button" value="🤾♂️" onclick="setEmojis('🤾','♂️');"/>
-   <input type="button" value="👨‍‍‍‍‍❤️‍💋👨" onclick="setEmojis('👨‍❤️','💋‍👨');"/>
-   <input type="button" value="👨👩👦👦" onclick="setEmojis('👨‍👩','👦‍👦');"/>
-   <input type="button" value="👨🎨" onclick="setEmojis('👨','🎨');"/>
+   Copy & paste emoji by emoji here:<br/>
+   <input id="emoji" type="text" onkeyup="add();" size="1" /><br/>
+   <div id="emojis"></div><br/>
+   <div id="result"></div>&nbsp;<input type="button" value="Copy Emoji" onclick="copyToClipboard('result')" /><br/>
+   <input type="button" value="Restart" onclick="reset();"/><br/>
+
+   <script>
+      for (var i=0;i<emojis.length;i++) {
+         var emojisArrayString = "['" + emojis[i].join("','") + "']";
+         document.write('<input type="button" value="'+emojis[i].join("")+'" onclick="setEmojis('+emojisArrayString+');"/>');
+      }
+   </script>
  <br/><br/>
  Zero Width Joiner (ZWJ) <a href="https://en.wikipedia.org/wiki/Zero-width_joiner" target="_blank">Wikipedia</a><br/>
  Emoji ZWJ Sequences <a href="https://emojipedia.org/emoji-zwj-sequences/" target="_blank">Emojipedia</a><br/><br/>
-   <div id="zwj">&#8205;</div>
    <input type="button" value="Copy Zero Width Joiner" onclick="copyToClipboard('zwj')" /><br/>
+   <div id="zwj">&#8205;</div>
 </body>
 
 </html>
