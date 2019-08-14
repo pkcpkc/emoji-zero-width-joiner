@@ -3,7 +3,9 @@
 <head>
    <meta charset="UTF-8">
    <script type="text/javascript">
-      const emojis = [['👁', '🗨'], ['👩', '🔬'], ['🏄', '♀'], ['👩', '🔧'], ['🤾', '♂️'], ['👨', '❤️', '💋', '👨'], ['👨', '👩', '👦', '👦'], ['👨', '🎨']];
+      const emojis = [
+         ['👁', '🗨'], ['👩', '🔬'], ['🏄', '♀'], ['👩', '🔧'], ['🤾', '♂️'], ['👨', '❤️', '💋', '👨'],
+         ['👨', '👩', '👦', '👦'], ['👨', '🎨'], ['👨', '🦰'],['👩','🏫'],['👨','🎤'],['👩','🚒']];
 
       function copyToClipboard(elementId) {
          var range = document.createRange();
@@ -40,9 +42,8 @@
 
       function init() {
          var sequenceArray = [];
-         //file:///Users/phackenb/Projects/emoji-zero-width-joiner/index.html?sequence=["👩","🔬"]
          try {
-            sequenceArray = JSON.parse(decodeURI(location.hash.substring("#sequence=".length)));
+            sequenceArray = JSON.parse(decodeURI(location.hash.substring("#".length)));
          } catch (e) {
             sequenceArray = ['👩', '🔧'];
          }
@@ -78,16 +79,16 @@
 
 <body onload="init();">
    <h1>Zero Width Joiner Emoji Fun</h1>
-   Copy & paste emoji by emoji here, or use following anchor: <a href="#sequence=[&quot;👩&quot;,&quot;🔬&quot;]" onclick="init();">#sequence=["👩","🔬"]</a><br />
-   <input id="emoji" type="text" onkeyup="add();" size="1" /><br />
-   <div id="emojis"></div><br />
+   Copy & paste emoji by emoji here:<br/>
+   <input id="emoji" type="text" onkeyup="add();" size="1" /><br /><br/>
+   <div id="emojis"></div>
    <div id="result"></div>&nbsp;<input type="button" value="Copy Emoji" onclick="copyToClipboard('result')" /><br />
-   <input type="button" value="Restart" onclick="reset();" /><br />
-
+   <input type="button" value="Restart" onclick="reset();" /><br /><br/>
+   Examples:<br/>
    <script type="text/javascript">
       for (var i = 0; i < emojis.length; i++) {
          var emojisArrayString = "[\"" + emojis[i].join("\",\"") + "\"]";
-         document.write('<a href="#sequence=' + encodeURI(emojisArrayString) + '">' + emojis[i].join("") + '</a> | ');
+         document.write('<a href="#' + encodeURI(emojisArrayString) + '">' + emojis[i].join("") + '</a> | ');
       }
    </script>
    <br /><br />
