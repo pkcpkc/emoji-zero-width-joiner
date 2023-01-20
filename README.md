@@ -8,3 +8,5 @@ Some [Emoji sequences](https://emojipedia.org/emoji-zwj-sequences/) joined toget
 Check out the index.html file.
 
 So much fun! 😁
+
+See it live on [GitHub Pages](https://pkcpkc.github.io/emoji-zero-width-joiner/).
